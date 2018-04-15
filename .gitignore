@@ -1,0 +1,8 @@
+persistence/gitlab/config/*
+!persistence/gitlab/config/.gitkeep
+persistence/gitlab/data/*
+!persistence/gitlab/data/.gitkeep
+persistence/gitlab/logs/*
+!persistence/gitlab/logs/.gitkeep
+persistence/gitlab-runner/config/*
+!persistence/gitlab-runner/config/.gitkeep

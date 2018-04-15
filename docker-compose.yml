@@ -1,0 +1,35 @@
+version: '3.6'
+
+
+# networks:
+#  gitlab_net:
+#    driver: bridge
+
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    ports:
+    - "9080:80"
+    - "9443:443"
+    volumes:
+    - ./persistence/gitlab/config:/etc/gitlab
+    - ./persistence/gitlab/logs:/var/log/gitlab
+    - ./persistence/gitlab/data:/var/opt/gitlab
+
+  gitlab-runner:
+    image: gitlab/gitlab-runner:alpine
+    depends_on:
+    - gitlab
+    privileged: true
+    volumes:
+    - ./persistence/gitlab-runner/config:/etc/gitlab-runner
+    #- /var/run/docker.sock:/var/run/docker.sock
+    environment:
+    - CI_SERVER_URL=http://gitlab/ci
+    - REGISTRATION_TOKEN=
+    - RUNNER_NAME=alpine_docker
+    - RUNNER_EXECUTOR=docker
+    - DOCKER_IMAGE=alpine:latest
+    # Notice that it matches exactly the network found in docker network ls
+    # - DOCKER_NETWORK_MODE=gitlab_gitlab_net
+

@@ -1,3 +1,4 @@
+.env
 persistence/gitlab/config/*
 !persistence/gitlab/config/.gitkeep
 persistence/gitlab/data/*

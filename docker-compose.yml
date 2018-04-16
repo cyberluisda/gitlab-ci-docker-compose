@@ -35,7 +35,7 @@ services:
       - "gitlab:192.168.201.10"
     volumes:
     - ./persistence/gitlab-runner/config:/etc/gitlab-runner
-    #- /var/run/docker.sock:/var/run/docker.sock
+    - /var/run/docker.sock:/var/run/docker.sock
     environment:
     - CI_SERVER_URL=http://gitlab/ci
     - REGISTRATION_TOKEN=${GITLAB_RUNNER_REGISTRATION_TOKEN}
@@ -46,3 +46,4 @@ services:
     # - DOCKER_NETWORK_MODE=gitlab_gitlab_net
 
     - DOCKER_EXTRA_HOSTS=gitlab:192.168.201.10
+    - DOCKER_VOLUMES=/var/run/docker.sock:/var/run/docker.sock

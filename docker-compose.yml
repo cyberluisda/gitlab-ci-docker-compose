@@ -11,6 +11,7 @@ networks:
 services:
   gitlab:
     image: gitlab/gitlab-ce:latest
+    hostname: gitlab
     ports:
     - "9080:80"
     - "9443:443"

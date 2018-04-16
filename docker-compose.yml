@@ -1,9 +1,12 @@
 version: '3.6'
 
-
-# networks:
-#  gitlab_net:
-#    driver: bridge
+networks:
+ gitlab_net:
+   driver: bridge
+   ipam:
+      driver: default
+      config:
+      - subnet: 192.168.201.0/24
 
 services:
   gitlab:
@@ -15,12 +18,19 @@ services:
     - ./persistence/gitlab/config:/etc/gitlab
     - ./persistence/gitlab/logs:/var/log/gitlab
     - ./persistence/gitlab/data:/var/opt/gitlab
+    networks:
+      gitlab_net:
+        ipv4_address: 192.168.201.10
 
   gitlab-runner:
     image: gitlab/gitlab-runner:alpine
     depends_on:
     - gitlab
     privileged: true
+    networks:
+    - gitlab_net
+    extra_hosts:
+      - "gitlab:192.168.201.10"
     volumes:
     - ./persistence/gitlab-runner/config:/etc/gitlab-runner
     #- /var/run/docker.sock:/var/run/docker.sock
@@ -33,3 +43,4 @@ services:
     # Notice that it matches exactly the network found in docker network ls
     # - DOCKER_NETWORK_MODE=gitlab_gitlab_net
 
+    - DOCKER_EXTRA_HOSTS=gitlab:192.168.201.10

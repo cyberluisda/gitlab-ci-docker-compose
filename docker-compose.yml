@@ -43,7 +43,6 @@ services:
     - RUNNER_EXECUTOR=docker
     - DOCKER_IMAGE=alpine:latest
     # Notice that it matches exactly the network found in docker network ls
-    # - DOCKER_NETWORK_MODE=gitlab_gitlab_net
-
+    - DOCKER_NETWORK_MODE=gitlab-ci-docker-compose_gitlab_net
     - DOCKER_EXTRA_HOSTS=gitlab:192.168.201.10
     - DOCKER_VOLUMES=/var/run/docker.sock:/var/run/docker.sock

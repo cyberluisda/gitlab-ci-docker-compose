@@ -36,7 +36,7 @@ services:
     #- /var/run/docker.sock:/var/run/docker.sock
     environment:
     - CI_SERVER_URL=http://gitlab/ci
-    - REGISTRATION_TOKEN=
+    - REGISTRATION_TOKEN=${GITLAB_RUNNER_REGISTRATION_TOKEN}
     - RUNNER_NAME=alpine_docker
     - RUNNER_EXECUTOR=docker
     - DOCKER_IMAGE=alpine:latest

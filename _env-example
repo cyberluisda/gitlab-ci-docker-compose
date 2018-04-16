@@ -1,0 +1,5 @@
+###
+# GITLAB_RUNNER_REGISTRATION_TOKEN Gitlab ci runners registration token
+# This value will be set in REGISTRATION_TOKEN env var of gitlab-runner
+##
+# GITLAB_RUNNER_REGISTRATION_TOKEN=JtW9fB2zJcJ_yAhxiuz6

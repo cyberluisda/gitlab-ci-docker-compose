@@ -14,6 +14,7 @@ services:
     ports:
     - "9080:80"
     - "9443:443"
+    - "9022:22"
     volumes:
     - ./persistence/gitlab/config:/etc/gitlab
     - ./persistence/gitlab/logs:/var/log/gitlab

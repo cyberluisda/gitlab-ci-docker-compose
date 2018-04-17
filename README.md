@@ -27,6 +27,13 @@ Simple gitlab with gitlab-runner based on docker compose
    With this execution `gitlab-runner` up but can not start properly.
    **Registration is needed**
 
+1. Alternatively you can start gitlab and gitlab-runner at same time using _top
+   dependency service_
+
+   ```
+   docker-compose up target
+   ```
+
 1. Register `gitlab-runner` in parallel while service is running
 
   ```bash
@@ -65,3 +72,52 @@ Simple gitlab with gitlab-runner based on docker compose
   ```
 
 If all steps had no errors, now you can run ci pipeline
+
+# Starts and stop gitlab
+
+To start gitlab when you had configured previously, you can use `target` dummy service:
+
+```bash
+docker-compose up target
+```
+
+To stop all components you can use next order.
+
+```bash
+docker-compose stop
+```
+
+# Destroy containers
+
+To destroy containers and resource managed by `docker-compose` you can use:
+
+```bash
+docker-compose down -v --rmi local --remove-orphans
+```
+
+Please note that with this order gitlab configuration and _state_ is not
+destroyed because this _state_ is saved under `persistence` sub-paths.
+
+To completely remove this _state_ you can delete this paths **just after**
+container are destroyed:
+
+```bash
+find persistence -name '.gitkeep' | while read gkpath
+do
+  path="$(dirname "${gkpath}")"
+  echo "* Deleting items in ${path}"
+  rm -fr ${path}/*
+done
+```
+
+**NOTE** This command must be run with root access granted
+
+# Purge runners
+
+With this docker-compose configuration (based in _Docker in docker_) containers
+in each job of CI pipeline are created in host and are not automatically
+removed.
+
+To prevent a lot of stopped dockers you can use `purge-runners` service that
+remove **all** stopped containers which name starts with `^runner.*` pattern
+(can be changed in [docker-compose.yml file](./docker-compose.yaml))

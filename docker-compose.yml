@@ -9,6 +9,18 @@ networks:
       - subnet: 192.168.201.0/24
 
 services:
+  # Dummy service to run with docker-compose up target in order to start
+  # mandatory services for pipeline
+  target:
+    image: busybox
+    depends_on:
+    - gitlab
+    - gitlab-runner
+    command:
+    - echo
+    - -n
+    - ""
+
   gitlab:
     image: gitlab/gitlab-ce:latest
     hostname: gitlab

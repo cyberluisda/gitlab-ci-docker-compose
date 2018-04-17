@@ -58,3 +58,15 @@ services:
     - DOCKER_NETWORK_MODE=gitlab-ci-docker-compose_gitlab_net
     - DOCKER_EXTRA_HOSTS=gitlab:192.168.201.10
     - DOCKER_VOLUMES=/var/run/docker.sock:/var/run/docker.sock
+
+  purge-runners:
+    image: docker
+    privileged: true
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      DOCKER_NAME_PATTERN: ^runner.*
+    command:
+      - /bin/sh
+      - -c
+      - docker ps -a | fgrep Exited | awk -v pattern="$$DOCKER_NAME_PATTERN" '$$NF~pattern{print $$1}' | tee | xargs docker rm -f

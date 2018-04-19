@@ -53,11 +53,14 @@ services:
     - REGISTRATION_TOKEN=${GITLAB_RUNNER_REGISTRATION_TOKEN}
     - RUNNER_NAME=alpine_docker
     - RUNNER_EXECUTOR=docker
+    - RUNNER_TAG_LIST=dind,did,alpine,docker
+    - REGISTER_RUN_UNTAGGED=true
     - DOCKER_IMAGE=alpine:latest
     # Notice that it matches exactly the network found in docker network ls
     - DOCKER_NETWORK_MODE=gitlab-ci-docker-compose_gitlab_net
     - DOCKER_EXTRA_HOSTS=gitlab:192.168.201.10
     - DOCKER_VOLUMES=/var/run/docker.sock:/var/run/docker.sock
+    - DOCKER_PRIVILEGED=true
 
   purge-runners:
     image: docker

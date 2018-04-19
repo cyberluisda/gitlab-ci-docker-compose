@@ -43,7 +43,7 @@ Simple gitlab with gitlab-runner based on docker compose
   Run _registre runner_ into container, and fill data.
 
   ```bash
-  gitlab-runner register
+  gitlab-runner register -n
   ```
 
   Example of fields filled:
